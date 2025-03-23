@@ -3,6 +3,7 @@
 /* CONFIG */
 #define CEXP_STACK_SIZE 128
 #define CEXP_MAX_TOKENS 128
+#define CEXP_ERROR_LEN 64
 
 typedef double cexp_number;
 
@@ -17,11 +18,16 @@ typedef struct Cexp_Lexer {
 	char *p;
 } Cexp_Lexer;
 
+typedef struct Cexp_Result {
+	char error[CEXP_ERROR_LEN];
+	cexp_number value;
+} Cexp_Result;
+
 Cexp_Lexer cexp_lexer_new(char *expression);
 void cexp_lexer_delete(Cexp_Lexer *lexer);
 Cexp_Token cexp_lexer_next(Cexp_Lexer *this);
 
-cexp_number eval_raw(Cexp_Lexer *lexer);
+Cexp_Result eval_raw(Cexp_Lexer *lexer);
 
 /* quick eval: constructs Cexp_Lexer for you */
-cexp_number eval(char *expression);
+Cexp_Result eval(char *expression);

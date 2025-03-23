@@ -57,22 +57,35 @@ static cexp_bool cexp_is_operator(char c) {
 	return (c == '+' || c == '-' || c == '*' || c == '/');
 }
 
-static cexp_number perform_operation(cexp_number operand1, cexp_number operand2, char operator) {
+static Cexp_Result cexp_result_new() {
+	Cexp_Result result;
+	memset(result.error, 0, sizeof(result.error));
+	result.value = 0;
+	return result;
+}
+
+static Cexp_Result perform_operation(cexp_number operand1, cexp_number operand2, char operator) {
+	Cexp_Result result = cexp_result_new();
+
 	switch (operator) {
 	case '+':
-		return operand1 + operand2;
+		result.value = operand1 + operand2;
+		break;
 	case '-':
-		return operand1 - operand2;
+		result.value = operand1 - operand2;
+		break;
 	case '*':
-		return operand1 * operand2;
+		result.value = operand1 * operand2;
+		break;
 	case '/':
-		if (operand2 == 0)
-			return 0;
-		return operand1 / operand2;
-	default:
-		return 0;
+		if (operand2 == 0) {
+			snprintf(result.error, sizeof(result.error), "Division by 0: \"%f / %f\"", (double)operand1, (double)operand2);
+			break;
+		}
+		result.value = operand1 / operand2;
+		break;
 	}
-	return 0;
+	return result;
 }
 
 Cexp_Lexer cexp_lexer_new(char *expression) {
@@ -161,10 +174,11 @@ Cexp_Token cexp_lexer_next(Cexp_Lexer *this) {
 	return token;
 }
 
-cexp_number eval_raw(Cexp_Lexer *lexer) {
+Cexp_Result eval_raw(Cexp_Lexer *lexer) {
 	NumStack values;
 	CharStack operators;
 	Cexp_Token token;
+	Cexp_Result op_res, result;
 
 	cexp_init_num_stack(&values);
 	cexp_init_char_stack(&operators);
@@ -179,7 +193,14 @@ cexp_number eval_raw(Cexp_Lexer *lexer) {
 
 				operand2 = cexp_pop_num(&values);
 				operand1 = cexp_pop_num(&values);
-				cexp_push_num(&values, perform_operation(operand1, operand2, cexp_pop_char(&operators)));
+
+				op_res = perform_operation(operand1, operand2, cexp_pop_char(&operators));
+
+				if (*op_res.error) {
+					return op_res;
+				}
+
+				cexp_push_num(&values, op_res.value);
 			}
 			cexp_push_char(&operators, token.ch);
 		} else if (token.type == CEXP_LPAREN) {
@@ -190,7 +211,14 @@ cexp_number eval_raw(Cexp_Lexer *lexer) {
 
 				operand2 = cexp_pop_num(&values);
 				operand1 = cexp_pop_num(&values);
-				cexp_push_num(&values, perform_operation(operand1, operand2, cexp_pop_char(&operators)));
+
+				op_res = perform_operation(operand1, operand2, cexp_pop_char(&operators));
+
+				if (*op_res.error) {
+					return op_res;
+				}
+
+				cexp_push_num(&values, op_res.value);
 			}
 			cexp_pop_char(&operators);
 		}
@@ -202,15 +230,25 @@ cexp_number eval_raw(Cexp_Lexer *lexer) {
 
 		operand2 = cexp_pop_num(&values);
 		operand1 = cexp_pop_num(&values);
-		cexp_push_num(&values, perform_operation(operand1, operand2, cexp_pop_char(&operators)));
+
+		op_res = perform_operation(operand1, operand2, cexp_pop_char(&operators));
+
+		if (*op_res.error) {
+			return op_res;
+		}
+
+		cexp_push_num(&values, op_res.value);
 	}
 
-	return cexp_pop_num(&values);
+	result = cexp_result_new();
+	result.value = cexp_pop_num(&values);
+
+	return result;
 }
 
-cexp_number eval(char *expression) {
+Cexp_Result eval(char *expression) {
 	Cexp_Lexer lexer;
-	cexp_number result;
+	Cexp_Result result = cexp_result_new();
 
 	lexer = cexp_lexer_new(expression);
 
