@@ -17,7 +17,7 @@ typedef struct Cexp_Lexer {
 	char *p;
 } Cexp_Lexer;
 
-Cexp_Lexer *cexp_lexer_new(char *expression);
+Cexp_Lexer cexp_lexer_new(char *expression);
 void cexp_lexer_delete(Cexp_Lexer *lexer);
 Cexp_Token cexp_lexer_next(Cexp_Lexer *this);
 

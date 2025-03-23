@@ -75,17 +75,16 @@ static cexp_number perform_operation(cexp_number operand1, cexp_number operand2,
 	return 0;
 }
 
-Cexp_Lexer *cexp_lexer_new(char *expression) {
-	Cexp_Lexer *lexer;
-	lexer = malloc(sizeof(Cexp_Lexer));
-	lexer->expression = expression;
-	lexer->p = lexer->expression;
+Cexp_Lexer cexp_lexer_new(char *expression) {
+	Cexp_Lexer lexer;
+	lexer.expression = expression;
+	lexer.p = lexer.expression;
 
 	return lexer;
 }
 
 void cexp_lexer_delete(Cexp_Lexer *lexer) {
-	free(lexer);
+	/* nothing */
 }
 
 static Cexp_Token cexp_lexer_number(Cexp_Lexer *this) {
@@ -210,14 +209,14 @@ cexp_number eval_raw(Cexp_Lexer *lexer) {
 }
 
 cexp_number eval(char *expression) {
-	Cexp_Lexer *lexer;
+	Cexp_Lexer lexer;
 	cexp_number result;
 
 	lexer = cexp_lexer_new(expression);
 
-	result = eval_raw(lexer);
+	result = eval_raw(&lexer);
 
-	cexp_lexer_delete(lexer);
+	cexp_lexer_delete(&lexer);
 
 	return result;
 }
