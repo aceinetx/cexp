@@ -7,14 +7,14 @@
 typedef double cexp_number;
 
 typedef struct Cexp_Token {
-  enum { CEXP_NONE, CEXP_NUMBER, CEXP_OPERATOR, CEXP_LPAREN, CEXP_RPAREN } type;
-  cexp_number value;
-  char ch;
+	enum { CEXP_NONE, CEXP_NUMBER, CEXP_OPERATOR, CEXP_LPAREN, CEXP_RPAREN } type;
+	cexp_number value;
+	char ch;
 } Cexp_Token;
 
 typedef struct Cexp_Lexer {
-  char *expression;
-  char *p;
+	char *expression;
+	char *p;
 } Cexp_Lexer;
 
 Cexp_Lexer *cexp_lexer_new(char *expression);

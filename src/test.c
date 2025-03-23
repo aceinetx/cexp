@@ -3,6 +3,6 @@
 #include <string.h>
 
 int main() {
-  printf("%f\n", eval("69.123 / (1 + 2)"));
-  return 0;
+	printf("%f\n", eval("69.123 / (1 + 2)"));
+	return 0;
 }
