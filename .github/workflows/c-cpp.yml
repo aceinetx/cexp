@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_C_FLAGS="-static" ..
+          cmake ..
           make -j$(nproc)
           mv libcexp.a ..
           mv libcexp.so ..
