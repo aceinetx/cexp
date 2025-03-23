@@ -27,12 +27,19 @@ jobs:
           cmake -DCMAKE_C_FLAGS="-static" ..
           make -j$(nproc)
           mv libcexp.a ..
+          mv libcexp.so ..
       
       - name: Upload artifact (static)
         uses: actions/upload-artifact@v4
         with:
           name: cexp-static
           path: libcexp.a
+      
+      - name: Upload artifact (shared)
+        uses: actions/upload-artifact@v4
+        with:
+          name: cexp-shared
+          path: libcexp.so
       
   publish:
     name: Publish
@@ -48,6 +55,11 @@ jobs:
         with:
           name: cexp-static
 
+      - name: Download artifact (shared)
+        uses: actions/download-artifact@v4
+        with:
+          name: cexp-shared
+
       - name: Update Nightly Release
         uses: andelf/nightly-release@main
         env:
@@ -59,3 +71,4 @@ jobs:
             Automated nightly release for commit ${{ github.sha }}. This release contains all of the newest features.
           files: |
             ./libcexp.a
+            ./libcexp.so
