@@ -10,8 +10,8 @@ endif()
 
 include_directories("include")
 
-add_library("cexp" "src/cexp.c")
-target_link_libraries("cexp" "m")
+add_library(cexp "src/cexp.c")
+target_link_libraries(cexp "m")
 
-add_executable("test" "src/test.c")
-target_link_libraries("test" cexp)
+add_executable(test "src/test.c")
+target_link_libraries(test cexp)
