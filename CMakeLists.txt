@@ -22,5 +22,8 @@ else()
 	set_target_properties(cexp_static PROPERTIES OUTPUT_NAME "cexp")
 endif()
 
-add_executable(test "src/test.c")
-target_link_libraries(test cexp_static)
+add_executable(basic "src/examples/basic.c")
+target_link_libraries(basic cexp_static)
+
+add_executable(calculator "src/examples/calculator.c")
+target_link_libraries(calculator cexp_static)
