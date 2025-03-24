@@ -31,3 +31,5 @@ Cexp_Result eval_raw(Cexp_Lexer *lexer);
 
 /* quick eval: constructs Cexp_Lexer for you */
 Cexp_Result eval(char *expression);
+
+double cexp_pow(double base, int exp);

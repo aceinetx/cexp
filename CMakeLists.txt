@@ -9,12 +9,13 @@ if(LINUX)
 endif()
 
 include_directories("include")
+set(CEXP_SOURCES "src/cexp.c" "src/cexp_pow.c")
 
-add_library(cexp_static "src/cexp.c")
+add_library(cexp_static ${CEXP_SOURCES})
 target_link_libraries(cexp_static "m")
 set_target_properties(cexp_static PROPERTIES OUTPUT_NAME "cexp")
 
-add_library(cexp SHARED "src/cexp.c")
+add_library(cexp ${CEXP_SOURCES})
 target_link_libraries(cexp "m")
 set_target_properties(cexp PROPERTIES OUTPUT_NAME "cexp")
 

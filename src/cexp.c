@@ -1,5 +1,4 @@
 #include <cexp.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -137,7 +136,7 @@ static Cexp_Token cexp_lexer_number(Cexp_Lexer *this) {
 		this->p++;
 	}
 
-	token.value = (left_part + (right_part / (cexp_number)pow(10, right_part_length)));
+	token.value = (left_part + (right_part / (cexp_number)cexp_pow(10, right_part_length)));
 
 	return token;
 }
