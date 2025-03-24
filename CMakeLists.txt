@@ -15,7 +15,7 @@ add_library(cexp_static ${CEXP_SOURCES})
 target_link_libraries(cexp_static "m")
 set_target_properties(cexp_static PROPERTIES OUTPUT_NAME "cexp")
 
-add_library(cexp ${CEXP_SOURCES})
+add_library(cexp SHARED ${CEXP_SOURCES})
 target_link_libraries(cexp "m")
 set_target_properties(cexp PROPERTIES OUTPUT_NAME "cexp")
 
