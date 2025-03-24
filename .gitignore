@@ -12,3 +12,7 @@ _deps
 CMakeUserPresets.json
 build
 build/*
+out/*
+out
+.vs
+.vs/*
