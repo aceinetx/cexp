@@ -16,3 +16,5 @@ out/*
 out
 .vs
 .vs/*
+.cache/*
+.cache

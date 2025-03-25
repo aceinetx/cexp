@@ -14,7 +14,7 @@ void do_expression(char *expression) {
 	printf("%f\n", result.value);
 }
 
-int main() {
+int main(void) {
 	for (;;) {
 		char buf[255];
 

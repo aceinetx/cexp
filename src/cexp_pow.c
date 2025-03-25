@@ -1,3 +1,5 @@
+#include <cexp.h>
+
 double cexp_pow(double base, int exp) {
 	double result;
 	if (exp == 0) {

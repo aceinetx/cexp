@@ -1,6 +1,5 @@
 #include <cexp.h>
 #include <stdio.h>
-#include <string.h>
 
 void do_expression(char *expression) {
 	Cexp_Result result;
@@ -14,7 +13,7 @@ void do_expression(char *expression) {
 	printf("%f\n", result.value);
 }
 
-int main() {
+int main(void) {
 	do_expression("69.123 / (1 + 2)");
 	do_expression("69 / (1 + 2)");
 	do_expression("0.1 + 0.2");

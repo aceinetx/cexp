@@ -1,6 +1,5 @@
 #include <cexp.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define cexp_bool char
@@ -56,7 +55,7 @@ static cexp_bool cexp_is_operator(char c) {
 	return (c == '+' || c == '-' || c == '*' || c == '/');
 }
 
-static Cexp_Result cexp_result_new() {
+static Cexp_Result cexp_result_new(void) {
 	Cexp_Result result;
 	memset(result.error, 0, sizeof(result.error));
 	result.value = 0;
