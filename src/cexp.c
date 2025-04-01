@@ -44,7 +44,7 @@ static char cexp_peek_char(CharStack *s) {
 	return s->items[s->top];
 }
 
-static bool cexp_is_empty_char(CharStack *s) {
+static cexp_bool cexp_is_empty_char(CharStack *s) {
 	return s->top == (size_t)-1;
 }
 
