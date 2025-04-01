@@ -1,4 +1,5 @@
-#include <stdbool.h>
+#ifndef CEXP_H
+#define CEXP_H
 
 /* CONFIG */
 #define CEXP_STACK_SIZE 128
@@ -33,3 +34,5 @@ Cexp_Result eval_raw(Cexp_Lexer *lexer);
 Cexp_Result eval(char *expression);
 
 double cexp_pow(double base, int exp);
+
+#endif
