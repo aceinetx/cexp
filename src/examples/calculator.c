@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void do_expression(char *expression) {
+void do_expression(char* expression) {
 	Cexp_Result result;
 	result = eval(expression);
 

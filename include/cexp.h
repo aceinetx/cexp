@@ -15,8 +15,8 @@ typedef struct Cexp_Token {
 } Cexp_Token;
 
 typedef struct Cexp_Lexer {
-	char *expression;
-	char *p;
+	char* expression;
+	char* p;
 } Cexp_Lexer;
 
 typedef struct Cexp_Result {
@@ -24,14 +24,14 @@ typedef struct Cexp_Result {
 	cexp_number value;
 } Cexp_Result;
 
-Cexp_Lexer cexp_lexer_new(char *expression);
-void cexp_lexer_delete(Cexp_Lexer *lexer);
-Cexp_Token cexp_lexer_next(Cexp_Lexer *this);
+Cexp_Lexer cexp_lexer_new(char* expression);
+void cexp_lexer_delete(Cexp_Lexer* lexer);
+Cexp_Token cexp_lexer_next(Cexp_Lexer* this);
 
-Cexp_Result eval_raw(Cexp_Lexer *lexer);
+Cexp_Result eval_raw(Cexp_Lexer* lexer);
 
 /* quick eval: constructs Cexp_Lexer for you */
-Cexp_Result eval(char *expression);
+Cexp_Result eval(char* expression);
 
 double cexp_pow(double base, int exp);
 

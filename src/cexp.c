@@ -16,35 +16,35 @@ typedef struct {
 	size_t top;
 } CharStack;
 
-static void cexp_init_num_stack(NumStack *s) {
+static void cexp_init_num_stack(NumStack* s) {
 	s->top = -1;
 }
 
-static void cexp_push_num(NumStack *s, cexp_number value) {
+static void cexp_push_num(NumStack* s, cexp_number value) {
 	s->items[++(s->top)] = value;
 }
 
-static cexp_number cexp_pop_num(NumStack *s) {
+static cexp_number cexp_pop_num(NumStack* s) {
 	return s->items[(s->top)--];
 }
 
-static void cexp_init_char_stack(CharStack *s) {
+static void cexp_init_char_stack(CharStack* s) {
 	s->top = -1;
 }
 
-static void cexp_push_char(CharStack *s, char value) {
+static void cexp_push_char(CharStack* s, char value) {
 	s->items[++(s->top)] = value;
 }
 
-static char cexp_pop_char(CharStack *s) {
+static char cexp_pop_char(CharStack* s) {
 	return s->items[(s->top)--];
 }
 
-static char cexp_peek_char(CharStack *s) {
+static char cexp_peek_char(CharStack* s) {
 	return s->items[s->top];
 }
 
-static cexp_bool cexp_is_empty_char(CharStack *s) {
+static cexp_bool cexp_is_empty_char(CharStack* s) {
 	return s->top == (size_t)-1;
 }
 
@@ -86,7 +86,7 @@ static Cexp_Result perform_operation(cexp_number operand1, cexp_number operand2,
 	return result;
 }
 
-Cexp_Lexer cexp_lexer_new(char *expression) {
+Cexp_Lexer cexp_lexer_new(char* expression) {
 	Cexp_Lexer lexer;
 	lexer.expression = expression;
 	lexer.p = lexer.expression;
@@ -94,11 +94,11 @@ Cexp_Lexer cexp_lexer_new(char *expression) {
 	return lexer;
 }
 
-void cexp_lexer_delete(Cexp_Lexer *lexer) {
+void cexp_lexer_delete(Cexp_Lexer* lexer) {
 	/* nothing */
 }
 
-static Cexp_Token cexp_lexer_number(Cexp_Lexer *this) {
+static Cexp_Token cexp_lexer_number(Cexp_Lexer* this) {
 	Cexp_Token token;
 	cexp_number left_part, right_part;
 	size_t right_part_length;
@@ -114,7 +114,7 @@ static Cexp_Token cexp_lexer_number(Cexp_Lexer *this) {
 	float_part = false;
 
 	while (*this->p) {
-		cexp_number *part;
+		cexp_number* part;
 
 		if (*this->p == '.') {
 			float_part = true;
@@ -140,7 +140,7 @@ static Cexp_Token cexp_lexer_number(Cexp_Lexer *this) {
 	return token;
 }
 
-Cexp_Token cexp_lexer_next(Cexp_Lexer *this) {
+Cexp_Token cexp_lexer_next(Cexp_Lexer* this) {
 	Cexp_Token token;
 
 	while (*this->p) {
@@ -172,7 +172,7 @@ Cexp_Token cexp_lexer_next(Cexp_Lexer *this) {
 	return token;
 }
 
-Cexp_Result eval_raw(Cexp_Lexer *lexer) {
+Cexp_Result eval_raw(Cexp_Lexer* lexer) {
 	NumStack values;
 	CharStack operators;
 	Cexp_Token token;
@@ -244,7 +244,7 @@ Cexp_Result eval_raw(Cexp_Lexer *lexer) {
 	return result;
 }
 
-Cexp_Result eval(char *expression) {
+Cexp_Result eval(char* expression) {
 	Cexp_Lexer lexer;
 	Cexp_Result result = cexp_result_new();
 
